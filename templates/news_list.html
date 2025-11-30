@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}News{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+  <p class="text-sm text-mist uppercase tracking-[0.18em] mb-2">Updates</p>
+  <h1 class="text-4xl font-display font-semibold tracking-tight">Rescue stories & news</h1>
+</div>
+
+<div class="space-y-8">
+  {% for post in posts %}
+    <article class="card p-6 md:p-8 space-y-3">
+      <h2 class="text-2xl font-semibold">
+        {{ post.title }}
+      </h2>
+
+      <p class="text-xs text-mist uppercase tracking-[0.12em]">
+        {{ post.date.strftime("%Y-%m-%d") }}
+      </p>
+
+      <div class="prose prose-invert max-w-none">
+        {{ post.body_html | safe }}
+      </div>
+
+      {% if post.images %}
+        {% set img_count = post.images|length %}
+        {% set grid_cols = "grid-cols-1" %}
+        {% if img_count == 2 %}
+          {% set grid_cols = "grid-cols-2" %}
+        {% elif img_count == 3 %}
+          {% set grid_cols = "grid-cols-2 md:grid-cols-3" %}
+        {% elif img_count >= 4 %}
+          {% set grid_cols = "grid-cols-2 md:grid-cols-4" %}
+        {% endif %}
+        <div class="mt-6 grid {{ grid_cols }} gap-3">
+          {% for img in post.images %}
+            <a
+              href="{{ img }}"
+              target="_blank"
+              rel="noopener"
+              class="group block overflow-hidden rounded-xl border border-bark bg-bark/60"
+            >
+              <img
+                src="{{ img }}"
+                alt="News image"
+                class="news-img transition duration-200 group-hover:scale-[1.02]"
+              />
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </article>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+<div id="slug-wrapper">
+  <input
+    id="slug-input"
+    name="slug"
+    class="w-full px-3 py-2 text-sm"
+    value="{{ slug or '' }}"
+  />
+
+  <p class="text-xs text-mist mt-1">
+    This becomes <code>/news/{{ slug or 'your-slug' }}</code>.
+  </p>
+</div>

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} | Bantay Paws{% endblock %}
+
+{% block content %}
+<article class="card p-6 md:p-8">
+  <h1 class="text-3xl font-semibold mb-2">{{ post.title }}</h1>
+  <p class="text-xs text-mist uppercase tracking-[0.12em] mb-4">
+    {{ post.date.strftime("%Y-%m-%d") }}
+    {% if post.author %} &middot; {{ post.author }}{% endif %}
+  </p>
+  <div class="prose prose-invert max-w-none">
+    {{ post.body_html | safe }}
+  </div>
+
+  {% if post.images %}
+    {% set img_count = post.images|length %}
+    {% set grid_cols = "grid-cols-1" %}
+    {% if img_count == 2 %}
+      {% set grid_cols = "grid-cols-2" %}
+    {% elif img_count == 3 %}
+      {% set grid_cols = "grid-cols-2 md:grid-cols-3" %}
+    {% elif img_count >= 4 %}
+      {% set grid_cols = "grid-cols-2 md:grid-cols-4" %}
+    {% endif %}
+    <div class="mt-6 grid {{ grid_cols }} gap-4">
+      {% for img in post.images %}
+        <a
+          href="{{ img }}"
+          target="_blank"
+          rel="noopener"
+          class="group block overflow-hidden rounded-2xl border border-bark bg-bark/60"
+        >
+          <img
+            src="{{ img }}"
+            alt="News image"
+            class="news-img-lg transition duration-200 group-hover:scale-[1.02]"
+          />
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</article>
+{% endblock %}

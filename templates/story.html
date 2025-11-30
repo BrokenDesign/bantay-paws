@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Our Story | Bantay Paws{% endblock %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto space-y-6">
+  <div class="card p-8 space-y-3">
+    <p class="text-xs text-mist uppercase tracking-[0.2em]">About</p>
+    <h1 class="font-display text-4xl font-semibold tracking-tight">Our Story</h1>
+    <p class="text-mist">
+      How Bantay Paws began, why we rescue, and the community that keeps us moving.
+    </p>
+  </div>
+
+  <article class="card p-8">
+    {% if story %}
+      <div class="prose prose-invert max-w-none">
+        {{ story.body_html | safe }}
+      </div>
+    {% else %}
+      <p class="text-mist">Story coming soon.</p>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}Bantay Paws{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#0c1512",
+            bark: "#1b2c24",
+            moss: "#14231d",
+            leaf: "#5bd391",
+            mist: "#a9b9a9",
+            sand: "#e6ddc7",
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', "Inter", "system-ui", "sans-serif"],
+            body: ['"Manrope"', "Inter", "system-ui", "sans-serif"],
+          },
+          boxShadow: {
+            glow: "0 12px 50px rgba(91, 211, 145, 0.22)",
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- HTMX -->
+  <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+
+  <style>
+    body {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(91, 211, 145, 0.12), transparent 28%),
+        radial-gradient(circle at 80% 0%, rgba(230, 221, 199, 0.08), transparent 30%),
+        #0c1512;
+      color: #e6ddc7;
+    }
+
+    a {
+      color: #93e9b0;
+    }
+
+    a:hover {
+      color: #cbffd9;
+    }
+
+    input,
+    textarea,
+    select {
+      background-color: #0f1a15;
+      border: 1px solid #24352d;
+      color: #e6ddc7;
+      border-radius: 12px;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #5bd391;
+      box-shadow: 0 0 0 4px rgba(91, 211, 145, 0.18);
+    }
+
+    .card {
+      background-color: #101d17;
+      border: 1px solid #1e2e27;
+      border-radius: 16px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
+    }
+
+    .muted {
+      color: #b9c6b9;
+    }
+
+    .prose,
+    .prose :where(p, li, span) {
+      color: #dfe6d8;
+    }
+
+    .prose :where(h1, h2, h3, h4) {
+      color: #fff;
+    }
+
+    .prose h2 {
+      font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: -0.01em;
+      padding-bottom: 0.35rem;
+      margin: 1.5rem 0 0.75rem;
+      border-bottom: 2px solid rgba(91, 211, 145, 0.35);
+      color: #cbffd9;
+    }
+
+    .prose h3 {
+      font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      margin: 1.2rem 0 0.5rem;
+      color: #93e9b0;
+    }
+
+    .prose ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+      margin: 1rem 0;
+    }
+
+    .prose ol {
+      list-style: decimal;
+      padding-left: 1.25rem;
+      margin: 1rem 0;
+    }
+
+    .prose li {
+      margin: 0.35rem 0;
+    }
+
+    /* News/gallery image sizing */
+    .news-img {
+      aspect-ratio: 4 / 3;
+      max-height: 18rem;
+      object-fit: cover;
+      width: 100%;
+    }
+    .news-img-lg {
+      aspect-ratio: 4 / 3;
+      max-height: 24rem;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    /* Markdown images inside posts */
+    .prose img {
+      width: 100%;
+      max-height: 22rem;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid #1e2e27;
+      cursor: pointer;
+      margin: 1rem 0;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-body bg-ink text-sand antialiased relative">
+  <div class="pointer-events-none absolute inset-0 overflow-hidden">
+    <div class="absolute -left-10 top-24 h-64 w-64 rounded-full bg-leaf/10 blur-3xl"></div>
+    <div class="absolute right-0 bottom-10 h-72 w-72 rounded-full bg-moss/30 blur-3xl"></div>
+  </div>
+
+  <header class="border-b border-bark/60 bg-[#0f1d17]/85 backdrop-blur sticky top-0 z-20">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between gap-6">
+      <a href="/" class="flex items-center gap-3 text-sand">
+        <span class="h-11 w-11 rounded-2xl bg-leaf text-ink font-display text-lg grid place-items-center shadow-glow">
+          BP
+        </span>
+        <div>
+          <p class="font-display text-lg tracking-tight">Bantay Paws</p>
+          <p class="text-xs text-mist uppercase tracking-[0.18em]">Dog rescue · Philippines</p>
+        </div>
+      </a>
+      {% set path = request.url.path if request else "" %}
+      <nav class="flex items-center gap-2 text-sm font-semibold">
+        {% for label, href in [("Donate", "/"), ("Our Story", "/story"), ("News", "/news")] %}
+          {% set active = (path == href) or (href != "/" and path.startswith(href)) %}
+          <a
+            href="{{ href }}"
+            class="px-3 py-2 rounded-full transition {{ 'bg-leaf text-ink shadow-glow' if active else 'text-mist hover:text-sand hover:bg-moss/60' }}"
+          >
+            {{ label }}
+          </a>
+        {% endfor %}
+        <a
+          href="/admin/login"
+          class="px-3 py-2 rounded-full border border-bark text-mist hover:text-sand hover:border-leaf hover:bg-moss/60 uppercase tracking-wide text-[11px]"
+        >
+          Admin
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-5xl mx-auto px-4 py-10 w-full">
+    {% block content %}{% endblock %}
+  </main>
+
+  <div class="fixed left-4 bottom-4 text-xs text-sand/70 z-30">
+    Copyright &copy; {{ current_year }} bantaypaws.org - All Rights Reserved.
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".prose img").forEach((img) => {
+        if (img.closest("a")) return;
+        const link = document.createElement("a");
+        link.href = img.src;
+        link.target = "_blank";
+        link.rel = "noopener";
+        img.replaceWith(link);
+        link.appendChild(img);
+      });
+    });
+  </script>
+</body>
+</html>

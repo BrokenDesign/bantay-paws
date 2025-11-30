@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Donate | Bantay Paws{% endblock %}
+
+{% block content %}
+<section class="min-h-[70vh] flex items-center justify-center">
+  <div class="card relative overflow-hidden px-10 py-14 text-center max-w-3xl w-full">
+    <div class="pointer-events-none absolute inset-0 opacity-60">
+      <div class="absolute -left-10 top-10 h-40 w-40 bg-leaf/20 blur-3xl rounded-full"></div>
+      <div class="absolute right-6 bottom-0 h-36 w-36 bg-moss/40 blur-3xl rounded-full"></div>
+    </div>
+
+    <div class="relative space-y-6">
+      <p class="uppercase tracking-[0.24em] text-xs text-mist">Bantay Paws Rescue</p>
+      <h1 class="font-display text-4xl md:text-5xl tracking-tight leading-tight">
+        Every donation keeps a rescued dog safe, fed, and loved.
+      </h1>
+      <p class="text-lg text-mist max-w-2xl mx-auto">
+        Your support powers urgent rescues, veterinary care, and rehabilitation for dogs across the Philippines.
+      </p>
+
+      <div class="flex items-center justify-center pt-4">
+        <a
+          href="https://bantaypaws.org/donate"
+          class="inline-flex items-center justify-center px-12 py-5 text-lg font-semibold rounded-full bg-leaf text-ink shadow-glow hover:-translate-y-0.5 transition transform"
+        >
+          donate
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6 text-left">
+        <div class="card bg-bark/60 p-4 border border-leaf/20">
+          <p class="text-sm text-mist uppercase tracking-[0.14em] mb-2">Rescue</p>
+          <p class="font-semibold">Field pickups & emergency care</p>
+        </div>
+        <div class="card bg-bark/60 p-4 border border-leaf/20">
+          <p class="text-sm text-mist uppercase tracking-[0.14em] mb-2">Rehab</p>
+          <p class="font-semibold">Nutrition, vet visits, and shelter</p>
+        </div>
+        <div class="card bg-bark/60 p-4 border border-leaf/20">
+          <p class="text-sm text-mist uppercase tracking-[0.14em] mb-2">Rehome</p>
+          <p class="font-semibold">Transport and adoption matching</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
