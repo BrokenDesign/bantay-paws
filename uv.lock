@@ -35,7 +35,7 @@ wheels = [
 ]
 
 [[package]]
-name = "bentay-paws-app"
+name = "bantay-paws-app"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
