@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.routes import admin, news
-from app.utils.content import load_story
+from app.utils.content import load_services, load_story
 from app.utils.templates import templates
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,7 +46,19 @@ async def story(request: Request):
     return templates.TemplateResponse(
         "story.html",
         {
-          "request": request,
-          "story": story,
+            "request": request,
+            "story": story,
+        },
+    )
+
+
+@app.get("/services", include_in_schema=False)
+async def services(request: Request):
+    services = load_services()
+    return templates.TemplateResponse(
+        "services.html",
+        {
+            "request": request,
+            "services": services,
         },
     )

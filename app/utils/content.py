@@ -126,6 +126,23 @@ def load_story() -> Post | None:
     )
 
 
+def load_services() -> Post | None:
+    path = CONTENT_DIR / "services.md"
+    if not path.exists():
+        return None
+
+    meta, raw_body, html = parse_post_file(path)
+    return Post(
+        title=meta.title,
+        slug=meta.slug,
+        date=meta.date,
+        body_html=html,
+        raw_body=raw_body,
+        path=path,
+        author=meta.author,
+    )
+
+
 def write_post_file(
     title: str,
     slug: str,

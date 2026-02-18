@@ -174,7 +174,7 @@
       </a>
       {% set path = request.url.path if request else "" %}
       <nav class="flex items-center gap-2 text-sm font-semibold">
-        {% for label, href in [("Donate", "/"), ("Our Story", "/story"), ("News", "/news")] %}
+        {% for label, href in [("Donate", "/"), ("Our Story", "/story"), ("Services", "/services"), ("News", "/news")] %}
           {% set active = (path == href) or (href != "/" and path.startswith(href)) %}
           <a
             href="{{ href }}"
